@@ -1,12 +1,12 @@
 import math
-
+import matplotlib.pyplot as plt
 
 
 
 #data_path = 'C:/work/fitgui/example-lin.txt'
-data_path = 'C:\work\inputOutputExamples\workingCols\input.txt'
+#data_path = 'C:\work\inputOutputExamples\workingCols\input.txt'
 #data_path = 'c:\work\inputOutputExamples\workingRows\input.txt'
-
+data_path = input("Please insert file path:")
 #check rows
 def check_rows(splt_lines):
     for i in range(1, len(splt_lines)):
@@ -93,10 +93,14 @@ def chi_sqr(x,y,a,b,dy):
 
 #main function
 def fitlin(filename):
-    with open(filename) as f:
-        lines = f.readlines()
-    f.closed
 
+    try:
+        with open(filename) as f:
+            lines = f.readlines()
+        f.closed
+    except:
+        print('fails opening input file')
+        return
 
     splt_lines=[]
     for line in lines:
@@ -160,5 +164,18 @@ def fitlin(filename):
 
     chichi = chi_sqr(x,y,a,b,dy)
     chichi_red = chichi/(N-2)
-    bb=9
+
+
+    print("a = {0:17.15f} +- {1:19.17f}".format(a,da))
+    print("b = {0:17.15f} +- {1:19.17f}".format(b,db))
+    print("chi2 = {0:17.15f}".format(chichi))
+    print("chi2_reduced = {0:17.15f}".format(chichi_red))
+
+    plt.plot(x, y, 'r+')
+    plt.show()
+
+
+
+
+     
 fitlin(data_path)
